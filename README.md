@@ -30,7 +30,7 @@ Then add to your Gruntfile
       grunt.config('testCompile.files', filepath)
   
     grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadTasks('node_modules/stof/src/compile')
+    grunt.loadTasks('node_modules/stof/lib/compile')
   
     grunt.registerTask 'watch-tests', 'Compiles all changed tests at start and watch for new changes continuously', ->
       grunt.task.run 'compile-tests'
