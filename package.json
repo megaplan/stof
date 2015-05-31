@@ -1,0 +1,19 @@
+{
+  "name": "stof",
+  "keywords": [
+    "cordjs",
+    "test"
+  ],
+  "version": "0.0.3",
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/main",
+  "dependencies": {
+    "bluebird": "^2.9.26",
+    "selenium-webdriver": "2.44.0",
+    "should": "~6.0.*",
+    "underscore": "~1.7.0"
+  },
+  "description": "Selenium Tests Organization Framework"
+}
