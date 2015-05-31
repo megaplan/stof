@@ -1,4 +1,4 @@
-_ = require 'underscore'
+_ = require 'lodash'
 webdriver = require 'selenium-webdriver'
 BaseProduct = require './factory/BaseProduct'
 

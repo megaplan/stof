@@ -1,0 +1,4 @@
+*.coffee
+*.html
+.git*
+src/

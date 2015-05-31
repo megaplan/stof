@@ -14,26 +14,30 @@ First of all
 
 Then add to your Gruntfile
 
-    grunt.initConfig
-      test:
+    grunt.config.merge
+      testCompile:
         files: [
           'test/**/*.coffee'
         ]
       watch:
         scripts:
-          files: [ '<%= test.files %>' ]
+          files: [ '<%= testCompile.files %>' ]
           tasks: [ 'compile-tests' ]
           options:
             spawn: false
   
     grunt.event.on 'watch', (action, filepath) ->
-      grunt.config('test.files', filepath)
+      grunt.config('testCompile.files', filepath)
   
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadTasks('node_modules/stof/src/compile')
+  
+    grunt.registerTask 'watch-tests', 'Compiles all changed tests at start and watch for new changes continuously', ->
+      grunt.task.run 'compile-tests'
+      grunt.task.run 'watch'
 
 
-## Self testing
+## Compiler testing
 
 To test compile feature run the following command
 
