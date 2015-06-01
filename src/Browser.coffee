@@ -241,7 +241,11 @@ class Browser
       port = stof.getConfigValue('stof.port')
       fullUrl += ':' + port if port
       url = fullUrl + url
+
     @driver().get(url)
+
+    if waitFor = getConfigValue('stof.waitAfterReloadSelector')
+      @element(waitFor).ready()
 
 
   forceForeground: ->

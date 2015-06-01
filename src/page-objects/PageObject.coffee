@@ -9,8 +9,6 @@ class PageObject extends BaseProduct
   # Parent of all PageObject selectors
   parentElement: null
 
-  _parentSelector: null
-
   # PageObject should wait for readyElement. It is equal to context by default
   readyElement: null
 
@@ -36,16 +34,15 @@ class PageObject extends BaseProduct
     super
     if @parentElement
       parentSelector = if parentSelector then parentSelector + ' ' + @parentElement else @parentElement
-      # By default we should wait for parentElement
-      if not @readyElement
-        @readyElement = @parentElement
-    parentSelector = @browser.element(parentSelector) if parentSelector
+
+    parentElement = @browser.element(parentSelector) if parentSelector
     for element, cssSelector of @elements
-      @[element] = @browser.element(cssSelector, parentSelector, "#{@constructor.name}.#{element}")
+      @[element] = @browser.element(cssSelector, parentElement, "#{@constructor.name}.#{element}")
 
-    @readyElement = @browser.element(@readyElement, parentSelector) if @readyElement
-
-    @_parentSelector = parentSelector
+    if @readyElement
+      @readyElement = @browser.element(@readyElement, parentElement)
+    else if parentSelector
+      @readyElement = @browser.element(parentSelector)
 
 
   ready: ->
@@ -54,8 +51,6 @@ class PageObject extends BaseProduct
 
     @return {webdriver.promise.Promise}
     ###
-    @browser.element('body:not(.m-not-ready)').ready()
-
     if @readyElement
       promise = @readyElement.ready()
       if @onReadyWait then @onReadyWait() else promise

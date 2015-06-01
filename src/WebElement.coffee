@@ -49,7 +49,7 @@ class WebElement extends BaseProduct
 
     @return {webdriver.promise.Promise}
     ###
-    @driver().waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
+    @_getContext().waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
 
 
   getText: ->
@@ -131,6 +131,7 @@ class WebElement extends BaseProduct
       if (value and not actualValue) or (not value and actualValue)
         throw new Error("Element value should be \"#{value}\". Actually \"#{actualValue}\"")
 
+
   pressEnter: ->
     ###
     Sends Enter to element
@@ -156,7 +157,7 @@ class WebElement extends BaseProduct
 
     @return {webdriver.promise.Promise}
     ###
-    @driver().waitForElementNotPresent(@bby)
+    @_getContext().waitForElementNotPresent(@bby)
 
 
   isPresent: (checkIsDisplayed = true) ->
@@ -169,8 +170,7 @@ class WebElement extends BaseProduct
     ###
 
     # Если указан родительский элемент, то искать будем в нем, а не во всем DOM дереве
-    root = if @_parent then @_parent.getElement() else @driver()
-    root.isElementPresent(@bby)
+    @_getContext().isElementPresent(@bby)
       .then (isPresent) =>
         if isPresent
           if checkIsDisplayed
@@ -211,6 +211,16 @@ class WebElement extends BaseProduct
     ###
     @driver().executeScript("$('#{@bby.value}').attr('#{name}', '#{value}')")
 
+
+  _getContext: ->
+    ###
+    Получение контекста окружения текущего элемента
+    Если у элемента нет родителя, то контекстом является WebDriver, иначе родитель WebElement
+    Применяется для вызова след. методов: isElementPresent, findElement, waitForElementPresent, waitForElementNotPresent
+
+    @return {webdriver.WebDriver|webdriver.WebElement}
+    ###
+    if @_parent then @_parent.getElement() else @driver()
 
 
 module.exports = WebElement
