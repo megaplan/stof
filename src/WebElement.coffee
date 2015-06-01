@@ -214,9 +214,10 @@ class WebElement extends BaseProduct
 
   _getContext: ->
     ###
-    Получение контекста окружения текущего элемента
-    Если у элемента нет родителя, то контекстом является WebDriver, иначе родитель WebElement
-    Применяется для вызова след. методов: isElementPresent, findElement, waitForElementPresent, waitForElementNotPresent
+    Gets current element context
+
+    If elements has no parent, context will be WebDriver, WebElement otherwise
+    Applies only for methods: isElementPresent, findElement, waitForElementPresent, waitForElementNotPresent
 
     @return {webdriver.WebDriver|webdriver.WebElement}
     ###
