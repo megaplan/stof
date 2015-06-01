@@ -75,9 +75,9 @@ webdriver.WebElement::waitForElementPresent = (locator, waitForDisplayed = true,
     promises.push wait
 
     if waitForDisplayed
+      errMsg = "Element '#{elementDescription}' isn't displayed on page #{url}"
       promises.push driver.wait(
-        errMsg = "Element '#{elementDescription}' isn't displayed on page #{url}"
-        => @findElement(locator).isDisplayed().then undefined, (err) ->
+        => @findElement(locator).isDisplayed().then undefined, ->
           false
         ,
         getConfigValue('stof.elementWait') * timeoutMultiplier,
