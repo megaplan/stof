@@ -280,7 +280,7 @@ self =
 
     @return {webdriver.Promise}
     ###
-    @closeAllWindows()
+    @getRootBrowser().done()
 
 
   promise: ->
