@@ -298,7 +298,7 @@ class Browser
 
     @param {webdriver.Promise}
     ###
-    @driver().call(promise)
+    @driver()['call'](promise)
 
 
 module.exports = Browser
