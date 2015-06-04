@@ -288,7 +288,7 @@ self =
     Returns webdriver's promise library
 
     Sample usage (written on CoffeeScript)
-      deferred = stof.promise.defer()
+      deferred = stof.promise().defer()
       doSomeThing ->
         deferred.fulfill()
       deferred.promise
