@@ -65,15 +65,16 @@ class Browser
     @pageObjectFactory.require(stof, directory)
 
 
-  helper: (helperPath) ->
+  helper: (helperPath, args...) ->
     ###
     Creates helper
 
     @param {String} pseudo-path to the class in BaseFactory.require() notation
+    @param {splat} custom arguments
 
     @return {TestHelper}
     ###
-    @helperFactory.produce(stof, helperPath, webdriver)
+    @helperFactory.produce(stof, helperPath, webdriver, args...)
 
 
   helperClass: (helperPath) ->
