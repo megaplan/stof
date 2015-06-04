@@ -283,6 +283,19 @@ self =
     @getRootBrowser().done()
 
 
+  promise: ->
+    ###
+    Returns webdriver's promise library
+
+    Sample usage (written on CoffeeScript)
+      deferred = stof.promise.defer()
+      doSomeThing ->
+        deferred.fulfill()
+      deferred.promise
+    ###
+    webdriver.promise
+
+
 self.newWindow()
 
 
