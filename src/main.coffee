@@ -28,8 +28,7 @@ global.refresh = -> rootBrowser.refresh.apply(rootBrowser, arguments)
 global.getCurrentUrl = -> rootBrowser.getCurrentUrl.apply(rootBrowser, arguments)
 global.forceForeground = -> rootBrowser.forceForeground.apply(rootBrowser, arguments)
 global.takeScreenshot = -> rootBrowser.takeScreenshot.apply(rootBrowser, arguments)
-global.step = (msg) ->
-  rootBrowser.driver.call(rootBrowser).controlFlow().execute -> console.log(msg)
+global.step = (msg) -> rootBrowser.schedule(-> console.log(msg))
 
 # Export base classes to globals, for handsome inheriting without requisition to call 'require()'
 global.PageObject = PageObject

@@ -289,16 +289,16 @@ class Browser
 
     @return {webdriver.Promise}
     ###
-    @driver().controlFlow().execute( -> )
+    @schedule( -> )
 
 
-  schedule: (promise) ->
+  schedule: (fn) ->
     ###
     Schedules a command to execute a custom function in webdriver control flow
 
-    @param {webdriver.Promise}
+    @param {function(): T|webdriver.promise.Promise[T]}
     ###
-    @driver()['call'](promise)
+    @driver()['call'](fn)
 
 
 module.exports = Browser
