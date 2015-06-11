@@ -49,9 +49,7 @@ class WebElement extends BaseProduct
 
     @return {webdriver.promise.Promise}
     ###
-    context = @_getContext()
-    context.ready?()
-    context.waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
+    @_getContext().waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
 
 
   getText: ->
@@ -223,7 +221,11 @@ class WebElement extends BaseProduct
 
     @return {webdriver.WebDriver|webdriver.WebElement}
     ###
-    if @_parent then @_parent.getElement() else @driver()
+    if @_parent
+      @_parent.ready()
+      @_parent.getElement()
+    else
+      @driver()
 
 
 module.exports = WebElement
