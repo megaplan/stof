@@ -49,7 +49,9 @@ class WebElement extends BaseProduct
 
     @return {webdriver.promise.Promise}
     ###
-    @_getContext().waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
+    context = @_getContext()
+    context.ready?()
+    context.waitForElementPresent(@bby, waitForDisplayed, timeoutMultiplier, @_elementDescription)
 
 
   getText: ->
