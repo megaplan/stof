@@ -5,6 +5,7 @@ HelperFactory     = require './factory/HelperFactory'
 WebDriverFactory  = require './factory/WebDriverFactory'
 
 fs                = require 'fs'
+_                 = require 'lodash'
 
 
 class Browser
@@ -289,7 +290,7 @@ class Browser
 
     @return {webdriver.Promise}
     ###
-    @schedule( -> )
+    @schedule(_.noop())
 
 
   schedule: (fn) ->
