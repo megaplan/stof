@@ -290,7 +290,7 @@ class Browser
 
     @return {webdriver.Promise}
     ###
-    @schedule(_.noop())
+    @schedule(_.noop)
 
 
   schedule: (fn) ->
