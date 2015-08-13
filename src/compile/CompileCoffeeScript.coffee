@@ -24,18 +24,17 @@ class CompileCoffeeScript
     dstDir = "#{ targetDir }/#{ dirname }"
 
     dstBasename = "#{ dstDir }/#{ basename }"
-    compileString = @compileString
 
     # compile only if destination is outdated or absent
-    lstat(src).then (stat) ->
+    lstat(src).then (stat) =>
       lstat("#{dstBasename}.js").then (destStat) ->
         destStat.mtime.getTime() < stat.mtime.getTime()
       .catch ->
         true
-      .then (doCompile) ->
+      .then (doCompile) =>
         if doCompile
           readFile(src, 'utf8').then (coffeeString) =>
-            answer = compileString(coffeeString, src)
+            answer = @compileString(coffeeString, src)
 
             mkdirp(dstDir)
 

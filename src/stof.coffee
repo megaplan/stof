@@ -226,9 +226,10 @@ self =
       Let's handle it
     ###
     targetDir = _parseTargetDir()
-    splitPathDir = testRootDir
-    splitPathDir = splitPathDir.replace(targetDir, '')  if splitPathDir.indexOf(targetDir) != -1
-    pathParts = directory.split(splitPathDir)
+
+    splitDir = testRootDir
+    splitDir = splitDir.replace(targetDir + '/', '') if splitDir.indexOf(targetDir) == 0
+    pathParts = directory.split(new RegExp("(?:#{targetDir}/)?#{splitDir}"))
 
     _currentAbsolutePath = "#{pathParts[0]}/#{testRootDir}"
     _currentAbsolutePath = _currentAbsolutePath.trimRight('/')
