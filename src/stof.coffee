@@ -61,6 +61,23 @@ _parseTestRootDir = ->
   process.env.STOF_ROOT_DIR
 
 
+_parseTargetDir = ->
+  ###
+  Finds test target dir path in command line arguments and process environment.
+  By default returns 'target'
+
+  @return {String}
+  ###
+  testTargetDir = null
+  process.argv.forEach (value) ->
+    testTargetDir = value.substr('--stof-target-dir='.length) if value.indexOf('--stof-target-dir=') == 0
+
+  return testTargetDir if testTargetDir?
+  return process.env.STOF_TARGET_DIR if process.env.STOF_TARGET_DIR?
+
+  'target'
+
+
 _prepareStackTrace = (stack) ->
   ###
   Cuts useless information from stacktrace
@@ -203,7 +220,16 @@ self =
     directory = pathParts[0] if pathParts.length == 2
 
     testRootDir = _parseTestRootDir()
-    pathParts = directory.split(testRootDir)
+
+    ###
+      coffee script test spec can be specified. But test objects and helpers must be included from target dir.
+      Let's handle it
+    ###
+    targetDir = _parseTargetDir()
+    splitPathDir = testRootDir
+    splitPathDir = splitPathDir.replace(targetDir, '')  if splitPathDir.indexOf(targetDir) != -1
+    pathParts = directory.split(splitPathDir)
+
     _currentAbsolutePath = "#{pathParts[0]}/#{testRootDir}"
     _currentAbsolutePath = _currentAbsolutePath.trimRight('/')
     _currentRelativePath = pathParts[1]

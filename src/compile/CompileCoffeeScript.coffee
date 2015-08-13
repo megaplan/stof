@@ -25,7 +25,6 @@ class CompileCoffeeScript
 
     dstBasename = "#{ dstDir }/#{ basename }"
 
-    preCompilerCallback = @preCompilerCallback
 
     # compile only if destination is outdated or absent
     lstat(src).then (stat) ->
@@ -35,14 +34,8 @@ class CompileCoffeeScript
         true
       .then (doCompile) ->
         if doCompile
-          readFile(src, 'utf8').then (coffeeString) ->
-            coffeeString = preCompilerCallback(coffeeString, src) if preCompilerCallback
-
-            answer = coffee.compile coffeeString,
-              literate: false
-              header: true
-              compile: true
-              bare: true
+          readFile(src, 'utf8').then (coffeeString) =>
+            answer = @compileString(coffeeString, src)
 
             mkdirp(dstDir)
 
@@ -54,6 +47,24 @@ class CompileCoffeeScript
             relSrc = src.substr(process.cwd().length + 1)
             console.log "Failed to compile #{relSrc}"
             throw e
+
+
+  compileString: (coffeeString, filename = '') ->
+    ###
+    Compiles CoffeeScript source code of spec, pageObject or helper.
+
+    @param {String} coffeeString
+    @param {String} filename Current compiling file name
+
+    @return {String} compiled JavaScript
+    ###
+    coffeeString = @preCompilerCallback(coffeeString, filename) if @preCompilerCallback
+
+    coffee.compile coffeeString,
+      literate: false
+      header: true
+      compile: true
+      bare: true
 
 
 module.exports = CompileCoffeeScript
