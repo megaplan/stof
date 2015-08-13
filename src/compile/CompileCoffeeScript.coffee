@@ -24,7 +24,7 @@ class CompileCoffeeScript
     dstDir = "#{ targetDir }/#{ dirname }"
 
     dstBasename = "#{ dstDir }/#{ basename }"
-
+    compileString = @compileString
 
     # compile only if destination is outdated or absent
     lstat(src).then (stat) ->
@@ -35,7 +35,7 @@ class CompileCoffeeScript
       .then (doCompile) ->
         if doCompile
           readFile(src, 'utf8').then (coffeeString) =>
-            answer = @compileString(coffeeString, src)
+            answer = compileString(coffeeString, src)
 
             mkdirp(dstDir)
 
